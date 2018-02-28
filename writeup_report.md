@@ -85,6 +85,14 @@ My model consists of two convolutional neural network layers followed by three f
 
 The data is normalized in the beginning of the model using a Keras lambda layer (model.py line 87) and is cropped using the Keras Cropping2D layer. The cropping is done so that only the part of the image which contains the road is taken for training and it helped in speeding up the training process as well.
 
+```python
+#Normalising the data
+model.add(Lambda(lambda x: (x /255)-0.5,input_shape=(160,320,3)))
+
+#Cropping unwanted pixels off the images
+model.add(Cropping2D(cropping=((50,20),(0,0))))
+```
+
 The convolution neural networks have 5x5 filter sizes and depths of 6 and 16 respectively in each layer (code lines 93-97).
 
 The output from the convolutional layers are flattened and are passed on to the three fully connected layers. The final output of these fully connected layers predicts the final steering angle.
